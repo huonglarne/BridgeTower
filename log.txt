@@ -1,0 +1,263 @@
+/nas/huong/projects/BridgeTower$ bash scripts/pre_train.sh 2>&1  | tee log.txt
+Tue 18 Jul 2023 05:25:18 PM KST
+moreh-2004-vm07
+/nas/huong/projects/BridgeTower
+node-0, 19800, , 288, 32, 128, 1e-5
+pt_288_32_128_1e-5_202307181725
+/nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/common/utils.py:2091: UserWarning: torch.triangular_solve is deprecated in favor of torch.linalg.solve_triangularand will be removed in a future PyTorch release.
+torch.linalg.solve_triangular has its arguments reversed and does not return a copy of one of the inputs.
+X = torch.triangular_solve(B, A).solution
+should be replaced with
+X = torch.linalg.solve_triangular(A, B). (Triggered internally at ../aten/src/ATen/native/BatchLinearAlgebra.cpp:2115.)
+  'triangular_solve': type(dummy_tensor.triangular_solve(dummy_tensor)),
+2023-07-18 17:25:22,554 - torch.distributed.nn.jit.instantiator - INFO - Created a temporary directory at /tmp/tmpcqo_t8oq
+2023-07-18 17:25:22,554 - torch.distributed.nn.jit.instantiator - INFO - Writing /tmp/tmpcqo_t8oq/_remote_module_non_scriptable.py
+2023-07-18 17:25:39,166 - VL - WARNING - No observers have been added to this run
+[2023-07-18 17:25:39.214] [info] Requesting resources for KT AI Accelerator from the server...
+[2023-07-18 17:25:40.232] [info] Initializing the worker daemon for KT AI Accelerator
+[2023-07-18 17:25:41.871] [info] [1/1] Connecting to resources on the server (192.168.110.16:24167)...
+[2023-07-18 17:25:41.886] [info] Establishing links to the resources...
+[2023-07-18 17:25:41.984] [info] KT AI Accelerator is ready to use.
+2023-07-18 17:25:41,986 - VL - INFO - Running command 'main'
+2023-07-18 17:25:41,986 - VL - INFO - Started
+Global seed set to 0
+2023-07-18 17:25:43,963 - VL - ERROR - Failed after 0:00:02!
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/experiment.py:312 in run_commandline      │
+│                                                                                                  │
+│   309 │   │   │   sys.exit()                                                                     │
+│   310 │   │                                                                                      │
+│   311 │   │   try:                                                                               │
+│ ❱ 312 │   │   │   return self.run(                                                               │
+│   313 │   │   │   │   cmd_name,                                                                  │
+│   314 │   │   │   │   config_updates,                                                            │
+│   315 │   │   │   │   named_configs,                                                             │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/experiment.py:276 in run                  │
+│                                                                                                  │
+│   273 │   │   run = self._create_run(                                                            │
+│   274 │   │   │   command_name, config_updates, named_configs, info, meta_info, options          │
+│   275 │   │   )                                                                                  │
+│ ❱ 276 │   │   run()                                                                              │
+│   277 │   │   return run                                                                         │
+│   278 │                                                                                          │
+│   279 │   def run_commandline(self, argv=None) -> Optional[Run]:                                 │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/run.py:238 in __call__                    │
+│                                                                                                  │
+│   235 │   │   │   │   self._emit_started()                                                       │
+│   236 │   │   │   │   self._start_heartbeat()                                                    │
+│   237 │   │   │   │   self._execute_pre_run_hooks()                                              │
+│ ❱ 238 │   │   │   │   self.result = self.main_function(*args)                                    │
+│   239 │   │   │   │   self._execute_post_run_hooks()                                             │
+│   240 │   │   │   │   if self.result is not None:                                                │
+│   241 │   │   │   │   │   self.run_logger.info("Result: {}".format(self.result))                 │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/config/captured_function.py:42 in         │
+│ captured_function                                                                                │
+│                                                                                                  │
+│   39 │   │   start_time = time.time()                                                            │
+│   40 │   # =================== run actual function =================================             │
+│   41 │   with ConfigError.track(wrapped.config, wrapped.prefix):                                 │
+│ ❱ 42 │   │   result = wrapped(*args, **kwargs)                                                   │
+│   43 │   # =========================================================================             │
+│   44 │   if wrapped.logger is not None:                                                          │
+│   45 │   │   stop_time = time.time()                                                             │
+│                                                                                                  │
+│ /nas/huong/projects/BridgeTower/run.py:29 in main                                                │
+│                                                                                                  │
+│    26 │   if _config["model_type"] == "METER":                                                   │
+│    27 │   │   model = METERTransformerSS(_config)                                                │
+│    28 │   elif _config["model_type"] == "BT":                                                    │
+│ ❱  29 │   │   model = BTTransformer(_config)                                                     │
+│    30 │   else:                                                                                  │
+│    31 │   │   raise NotImplementedError("model_type {} not implemented".format(_config["model_   │
+│    32                                                                                            │
+│                                                                                                  │
+│ /nas/huong/projects/BridgeTower/src/modules/bt_module.py:73 in __init__                          │
+│                                                                                                  │
+│    70 │   │   │   torch.distributed.barrier()                                                    │
+│    71 │   │                                                                                      │
+│    72 │   │   if self.is_clip:                                                                   │
+│ ❱  73 │   │   │   self.vit_model = build_model(config["vit"], resolution_after=resolution_afte   │
+│    74 │   │   elif self.is_swin:                                                                 │
+│    75 │   │   │   self.vit_model = getattr(swin, config["vit"])(                                 │
+│    76 │   │   │   │   pretrained=True, config=config,                                            │
+│                                                                                                  │
+│ /nas/huong/projects/BridgeTower/src/modules/clip_model.py:295 in build_model                     │
+│                                                                                                  │
+│   292 │   │   │   warnings.warn(f"File {model_path} is not a JIT archive. Loading as a state d   │
+│   293 │   │   │   jit = False                                                                    │
+│   294 │   │   state_dict = torch.load(model_path, map_location="cpu")                            │
+│ ❱ 295 │   state_dict = state_dict or model.state_dict()                                          │
+│   296 │   vit = "visual.proj" in state_dict                                                      │
+│   297 │                                                                                          │
+│   298 │   vision_width = state_dict["visual.conv1.weight"].shape[0] # Feature Dimension          │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:133 in  │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│   130 │   │   │   │   msg = ('Traceback (most recent call last):\n' + traceback_str +            │
+│   131 │   │   │   │   │      f'{type(instance).__name__}: {instance}')                           │
+│   132 │   │   │   │   frontend.push_message_to_loki(msg)                                         │
+│ ❱ 133 │   │   │   │   raise instance                                                             │
+│   134 │   │                                                                                      │
+│   135 │   │   return wrapper                                                                     │
+│   136                                                                                            │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:72 in   │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│    69 │   │   │   │   │   │   handle_inplace_args(funcname, args)                                │
+│    70 │   │   │   │   │   if not moreh_ext.should_run_moreh_impl(                                │
+│    71 │   │   │   │   │   │   │   funcname, *args, **kwargs):                                    │
+│ ❱  72 │   │   │   │   │   │   return torch_function(*args, **kwargs)                             │
+│    73 │   │   │   │   │                                                                          │
+│    74 │   │   │   │   │   return moreh_function(                                                 │
+│    75 │   │   │   │   │   │   *args, **handle_axis_and_keepdims(funcname, **kwargs))             │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/nn/modules/module.py:1445 in state_dict    │
+│                                                                                                  │
+│   1442 │   │   if hasattr(destination, "_metadata"):                                             │
+│   1443 │   │   │   destination._metadata[prefix[:-1]] = local_metadata                           │
+│   1444 │   │                                                                                     │
+│ ❱ 1445 │   │   self._save_to_state_dict(destination, prefix, keep_vars)                          │
+│   1446 │   │   for name, module in self._modules.items():                                        │
+│   1447 │   │   │   if module is not None:                                                        │
+│   1448 │   │   │   │   module.state_dict(destination=destination, prefix=prefix + name + '.', k  │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:133 in  │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│   130 │   │   │   │   msg = ('Traceback (most recent call last):\n' + traceback_str +            │
+│   131 │   │   │   │   │      f'{type(instance).__name__}: {instance}')                           │
+│   132 │   │   │   │   frontend.push_message_to_loki(msg)                                         │
+│ ❱ 133 │   │   │   │   raise instance                                                             │
+│   134 │   │                                                                                      │
+│   135 │   │   return wrapper                                                                     │
+│   136                                                                                            │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:72 in   │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│    69 │   │   │   │   │   │   handle_inplace_args(funcname, args)                                │
+│    70 │   │   │   │   │   if not moreh_ext.should_run_moreh_impl(                                │
+│    71 │   │   │   │   │   │   │   funcname, *args, **kwargs):                                    │
+│ ❱  72 │   │   │   │   │   │   return torch_function(*args, **kwargs)                             │
+│    73 │   │   │   │   │                                                                          │
+│    74 │   │   │   │   │   return moreh_function(                                                 │
+│    75 │   │   │   │   │   │   *args, **handle_axis_and_keepdims(funcname, **kwargs))             │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/nn/modules/module.py:1362 in               │
+│ _save_to_state_dict                                                                              │
+│                                                                                                  │
+│   1359 │   │   │   │   destination[prefix + name] = buf if keep_vars else buf.detach()           │
+│   1360 │   │   extra_state_key = prefix + _EXTRA_STATE_KEY_SUFFIX                                │
+│   1361 │   │   if getattr(self.__class__, "get_extra_state", Module.get_extra_state) is not Mod  │
+│ ❱ 1362 │   │   │   destination[extra_state_key] = self.get_extra_state()                         │
+│   1363 │                                                                                         │
+│   1364 │   # The user can pass an optional arbitrary mappable object to `state_dict`, in which   │
+│   1365 │   # back that same object. But if they pass nothing, an `OrederedDict` is created and   │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:133 in  │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│   130 │   │   │   │   msg = ('Traceback (most recent call last):\n' + traceback_str +            │
+│   131 │   │   │   │   │      f'{type(instance).__name__}: {instance}')                           │
+│   132 │   │   │   │   frontend.push_message_to_loki(msg)                                         │
+│ ❱ 133 │   │   │   │   raise instance                                                             │
+│   134 │   │                                                                                      │
+│   135 │   │   return wrapper                                                                     │
+│   136                                                                                            │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/_M/driver/wrapper/moreh_wrapper.py:72 in   │
+│ wrapper                                                                                          │
+│                                                                                                  │
+│    69 │   │   │   │   │   │   handle_inplace_args(funcname, args)                                │
+│    70 │   │   │   │   │   if not moreh_ext.should_run_moreh_impl(                                │
+│    71 │   │   │   │   │   │   │   funcname, *args, **kwargs):                                    │
+│ ❱  72 │   │   │   │   │   │   return torch_function(*args, **kwargs)                             │
+│    73 │   │   │   │   │                                                                          │
+│    74 │   │   │   │   │   return moreh_function(                                                 │
+│    75 │   │   │   │   │   │   *args, **handle_axis_and_keepdims(funcname, **kwargs))             │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/torch/nn/modules/module.py:619 in                │
+│ get_extra_state                                                                                  │
+│                                                                                                  │
+│    616 │   │   Returns:                                                                          │
+│    617 │   │   │   object: Any extra state to store in the module's state_dict                   │
+│    618 │   │   """                                                                               │
+│ ❱  619 │   │   raise RuntimeError(                                                               │
+│    620 │   │   │   "Reached a code path in Module.get_extra_state() that should never be called  │
+│    621 │   │   │   "Please file an issue at https://github.com/pytorch/pytorch/issues/new?templ  │
+│    622 │   │   │   "to report this bug.")                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: Reached a code path in Module.get_extra_state() that should never be called. Please file an issue at 
+https://github.com/pytorch/pytorch/issues/new?template=bug-report.yml to report this bug.
+
+During handling of the above exception, another exception occurred:
+
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /nas/huong/projects/BridgeTower/run.py:21 in <module>                                            │
+│                                                                                                  │
+│    18 resource.setrlimit(resource.RLIMIT_NOFILE, (20480, rlimit[1]))                             │
+│    19                                                                                            │
+│    20 @ex.automain                                                                               │
+│ ❱  21 def main(_config):                                                                         │
+│    22 │   _config = copy.deepcopy(_config)                                                       │
+│    23 │   pl.seed_everything(_config["seed"])                                                    │
+│    24                                                                                            │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/experiment.py:190 in automain             │
+│                                                                                                  │
+│   187 │   │   │   │   │   "interactive mode. Use @ex.main instead."                              │
+│   188 │   │   │   │   )                                                                          │
+│   189 │   │   │                                                                                  │
+│ ❱ 190 │   │   │   self.run_commandline()                                                         │
+│   191 │   │   return captured                                                                    │
+│   192 │                                                                                          │
+│   193 │   def option_hook(self, function):                                                       │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/experiment.py:347 in run_commandline      │
+│                                                                                                  │
+│   344 │   │   │   │   if isinstance(e, SacredError):                                             │
+│   345 │   │   │   │   │   print(format_sacred_error(e, short_usage), file=sys.stderr)            │
+│   346 │   │   │   │   else:                                                                      │
+│ ❱ 347 │   │   │   │   │   print_filtered_stacktrace()                                            │
+│   348 │   │   │   │   sys.exit(1)                                                                │
+│   349 │                                                                                          │
+│   350 │   def open_resource(self, filename: PathType, mode: str = "r"):                          │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/utils.py:493 in print_filtered_stacktrace │
+│                                                                                                  │
+│   490                                                                                            │
+│   491                                                                                            │
+│   492 def print_filtered_stacktrace(filter_traceback="default"):                                 │
+│ ❱ 493 │   print(format_filtered_stacktrace(filter_traceback), file=sys.stderr)                   │
+│   494                                                                                            │
+│   495                                                                                            │
+│   496 def format_filtered_stacktrace(filter_traceback="default"):                                │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/utils.py:528 in                           │
+│ format_filtered_stacktrace                                                                       │
+│                                                                                                  │
+│   525 │   │   │   tb_exception = tb.TracebackException(                                          │
+│   526 │   │   │   │   exc_type, exc_value, exc_traceback, limit=None                             │
+│   527 │   │   │   )                                                                              │
+│ ❱ 528 │   │   │   return "".join(filtered_traceback_format(tb_exception))                        │
+│   529 │   │   else:                                                                              │
+│   530 │   │   │   s = "Traceback (most recent calls WITHOUT Sacred internals):"                  │
+│   531 │   │   │   current_tb = exc_traceback                                                     │
+│                                                                                                  │
+│ /nas/.conda/envs/hf/lib/python3.8/site-packages/sacred/utils.py:568 in filtered_traceback_format │
+│                                                                                                  │
+│   565 │   │   │   yield from filtered_traceback_format(tb_exception.__context__, chain=chain)    │
+│   566 │   │   │   yield tb._context_message                                                      │
+│   567 │   yield "Traceback (most recent calls WITHOUT Sacred internals):\n"                      │
+│ ❱ 568 │   current_tb = tb_exception.exc_traceback                                                │
+│   569 │   while current_tb is not None:                                                          │
+│   570 │   │   if not _is_sacred_frame(current_tb.tb_frame):                                      │
+│   571 │   │   │   stack = tb.StackSummary.extract(                                               │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+AttributeError: 'TracebackException' object has no attribute 'exc_traceback'
+Tue 18 Jul 2023 05:25:46 PM KST
